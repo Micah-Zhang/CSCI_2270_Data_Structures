@@ -1,0 +1,29 @@
+FUNCTIONALITY 1: enqueue
+1. Ask user for a word and store in variable "new word"
+2. if(queue is not full) //queue size does not equal max size
+	a. myArray[tail] = new word
+	b. increase queue size by 1
+	c. if(tail is equal to max size - 1)
+		1. set tail = 0
+	d. else
+		1. increase tail by 1
+	e. print "E: <new word>"
+	f. print "H: <head>"
+	g. print "T: <tail>"
+3. else
+	a. print "Queue full"
+
+
+FUNCTIONALITY 2: dequeue
+1. if(queue is not empty) //queue size does not equal 0
+	a. new word = myArray[head]
+	b. decrease queue size by 1
+	c. if(head is equal to max size - 1)
+		1. set head = 0
+	d. else
+		1. increase head by 1
+	e. print "H: <head>"
+	f. print "T: <tail>"
+	g. print "word: <new word>"
+2. else
+	print "Queue is empty"

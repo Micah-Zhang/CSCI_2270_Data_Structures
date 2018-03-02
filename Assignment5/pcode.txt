@@ -1,0 +1,69 @@
+Micah Zhang
+Assignment 5 part A
+Shirly
+
+//Delete Function Implementation
+Delete(*root, data)
+	if(root is NULL)
+		return root //tree is empty, nothing to delete
+	else if(data < root.data) //data is located to the left of root
+		root.left = Delete(root.left, data) //use a recursive call to traverse to the left of root
+	else if(data > root.data) //data is located to the right of root
+		root.right = Delete(root.right,data) //use a recursive call to traverse to the right of root
+	else
+		//node to be deleted has no child
+		if(root.left is nullptr and root.right is nullptr)
+			root.parent.left = nullptr //isolate the leaf from the rest of the tree
+			root.parent.right = nullptr
+			root.parent = nullptr
+			delete root //delete the leaf
+			root = nullptr //reset the pointer
+		//node to be deleted has one child 
+		else if(root.left is nullptr) //child is on the right
+			*temp = root //create a temp pointer for deletion
+			root = root.right //traverse to the right child
+			root.parent = temp.parent //isolate the node
+			if(temp.parent!=nullptr)
+				temp.parent.right = root //if the node is not the original root of the tree, link the parent to the right child. otherwise, don't worry about it, the node does not have a parent
+				temp.parent = nullptr //isolate the node
+			temp.right = nullptr //isolate the node
+			delete temp //delete the node
+		else if(root.right is nullptr) //child is on the left
+			*temp = root //create temp pointer for deletion
+			root = root.left //traverse to the left child 
+			root.parent = temp.parent //isolate the node
+			if(temp.parent!=nullptr) //if the node is not the original root of the tree, link the parent to the right child. otherwise, don't worry about it, the node does not have a parent
+				temp.parent.left = root
+				temp.parent = nullptr //isolate the node
+			temp.left = nullptr //isolate the node
+			delete temp //delete the node
+		//node to be deleted has two children
+		else
+			*temp = root.right //create temp pointer to traverse tree to find min right value
+			while(temp != nullptr) //traverse the tree until the minimum right node is found
+				temp  = temp.left 
+			root.data = temp.data //replace current root value with min right value below root. remember, root is the value to be deleted.
+			//now, this is just like a deleting a node with one child
+			root.right = Delete(root.right,temp.data) //delete the minimum right node using recursion. this effectively shifts the right side the root node up one node, while in the process deleting the root node
+			//node isolation is handled by previous conditionals
+
+//Search function implementation
+Search(*root,data)
+	if(root is nullptr) //if tree is empty, return not found
+		return false
+	else if(root.data is data) //if value found, return found
+		return true
+	else if(data <= root.data) //if search data is less than or equal to data of current node, search node must be on left side of tree. use recursion to search left side of tree until found
+		return Search(root.left,data)
+	else //else search data is greater than data of current node. search node must be on right side of tree. use recursion to serach right side of tree until value found
+		return Search(root.right,data)
+
+//Menu Implementation
+print("Enter title")
+data = <user input>
+if(!Search(root,data))
+	print("Movie not found")
+else
+	Delete(root, data)
+
+//Note: I had to watch a bunch of youtube videos before I understood how binary search trees, and deletion from bst’s worked. As a result, this pseudocode was influenced by said videos, the in class lectures, and the textbook.

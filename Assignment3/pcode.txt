@@ -1,0 +1,49 @@
+Micah Zhang
+Assignment 3
+Shirly
+
+FUNCTIONALITY 3: TRANSMIT A MESSAGE
+1. ask the user "Enter the name of file: " and store user input in variable called "filename"
+2. check if the linked list is empty using the condition "head==nullptr"
+3. if the list is empty, display the message "Empty list"
+4. else:
+	//transmit the message
+	a. create a walker for the linked list and initialize it by setting it equal to head. it will reference the current item in the linked list
+	b. create second walker that will be used to reference the previous item in the linked list
+	b. use a while loop and a file reading function to read a single word from the text file. use whitespace " " as the delimiter. stop reading words and break out of the while loop when the end of the file is reached //this assumes "-" and "." is a word and will be transmitted as part of the message
+		1. use a while loop to traverse the linked list. set condition "walker->next is not a nullptr". during each iteration of the loop:
+			if this is the first item in the linked list:
+			a. store the new word in the "message" attribute of the current node, ie "walker1->message = new word"
+			b. display the message "<current city> recieved <message>", where <current city> refers to the name attribute of the current node in the linked list. and <message> corresponds to the attribute in the node that stores the new word
+			else, this is NOT the first item in the linked list:
+			a. set the second walker equal to the first walker
+			b. traverse to the next item in the linked list by setting walker1 = "city->next", where "city->next" is the address of the next item in the linked list
+			c. transfer the message from the previous item in the list to the current item in the list, ie "walker1->message = walker2->message"
+			d. display the message "<current city> recieved <message>", where <current city> refers to the name attribute of the current node in the linked list(walker1). and <message> corresponds to the attribute in the node that stores the new word
+			e. clear the message attribute from the previous item in the list, ie 'walker2->message = ""';
+5. free/reset pointers walker1,walker2, ie 'walker1 = nullptr, walker2 = nullptr' 
+
+FUNCTIONALITY 4: ADD A CITY
+1. ask the user "Enter a city name: " and store user input in variable "newCity"
+2. ask the user "Enter a previous city name: " and store user input in the variable "previousCity"
+//create a new city
+3. create new node and reference it using a pointer called "temp"
+4. give the new city a name using the user inputed variable "newCity", ie 'temp->name = newCity'
+5. if the user enters "First" for "previousCity", ie 'previousCity == "First"':
+	//create new head and insert it at the beginning of the list
+	a. make temp point to the previous first item in the list, ie "temp->next = head"
+	b. make head point to the new first item in the list, ie 'head = temp'
+6. else:
+	//search for "previousCity"
+	a. create a walker to traverse through the list. initialize it by setting it equal to head.
+	b. traverse to the second item of the list. //the first item is a special case that will be handled separately
+	c. use a while loop to traverse the rest of the linked list. set condition "walker1 is not a nullptr". during each iteration of the loop:
+		1. check to see if the current city matches "previousCity", ie 'if walker1->name = previousCity'	
+		2. if a match is found, break out of the while loop
+		3. else, traverse to the next item of the list, ie 'walker1 = walker1->next'
+	//insert "newCity" after "previousCity"
+	d. create another walker to store the address of the city that will follow "newCity"
+	e. set walker2 equal to the address of the item in the linked list that follows previousCity, ie 'walker2 = walker1->next'
+	f. make the previous city point to the new city, ie 'walker1->next = temp'
+	g. make the new city point to next item in the linked list, ie 'temp->next = walker2'
+7. free/reset pointers temp, walker1, walker2, ie 'temp = nullptr, walker1 = nullptr, walker2 = nullptr'

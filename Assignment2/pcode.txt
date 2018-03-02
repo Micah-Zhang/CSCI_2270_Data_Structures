@@ -1,0 +1,57 @@
+Micah Zhang
+Assignment 2
+Shirly
+
+MAIN LOGIC
+1. input the file to open and read
+2. input the number of most frequent words to output
+3. initialize the sentinel as -1
+4. initialize size of A = 100
+5. (create an array A of 100 structs in HEAP):
+	a. *ptrA = new [size of A] //will update syntax to incorporate structs in implementation
+	b. each struct has 2 attributes: 
+		1. a unique word
+		2. its current count
+6. use a while loop to read each line from the hunger games. use " " as the deliminator
+7. for each line:
+	a. call the function is_common() to determine whether or not the word is common:
+		1. if yes (is_common returns TRUE), read the next line. 
+		2. if no (is_common returns FALSE):
+			a. if sentinel = -1
+				1. set sentinel = 0
+				2. ptrA[sentinel]->word = first uncommon word //add the first word to the array
+				3. ptrA[sentinel]->count = 1 //set the count of the new word to 1
+			b. else ptrA = DoubleArray(ptrA,size of A,sentinel) 
+FUNCTION DEFINITIONS
+define a function called DoubleArray(input an array A, input address of size of A, input new word, input address of sentinel)
+	1. use a for loop to iterate through the array of structs (until sentinel is reached) using iterator i from 0 to sentinel, for each struct:
+		a. compare struct[i].word to the inputed word
+			1. if a match is found, increase struct[i].count by 1 and return A
+			2. else:
+				a. increase the sentinel by 1
+				b. if the sentinel is equal to the size of the array:
+					(Double the array)
+					1. size of A = 2 * size of A
+					1. *newptr = new [size of A] //create a new array of structs in heap that is double the size of the old one 
+					2. for(i = 0, i < size of A, increment i) //copy the contents of the old array into the new one
+						newptr[i] = A[i]; 
+					3. newptr[sentinel]->word = inputed word //add the new word to the array  //apologies if syntax isn't perfect. this is pseudocode. implementation will be different.
+					4. newptr[sentinel]->count = 1 //set the count of the new word to 1
+					4. delete array A //deallocate memory for the old array to prevent memory leakage
+					5. A = newptr //reuse pointer to the old array
+					6. newptr = nullptr //reset the new pointer so it can be reused
+					7. return A //returns original pointer, which now points to the new array
+				c. else:
+					1. A[sentinel]->word = inputed word //add the new word to the array
+					2. A[sentinel]->count = 1 //set the count of the new word to 1
+					3. return A
+
+define a function called is_common(input new word, input text file containing top 50 most popular words)
+	1. open the text file
+	2. use a while loop to read each line from the text file. for each line:
+		a. compare the line read to the inputed word
+		b. if they are the same:
+			1. break out of the while loop
+			2. return the boolean TRUE
+		c. if no matches are found return the boolean FALSE
+

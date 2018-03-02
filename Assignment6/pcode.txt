@@ -1,0 +1,102 @@
+Micah Zhang
+Assignment 6 Part A
+Shirly
+
+//Contains functionality for balancing a node in a red black tree: deletion and insertion
+
+
+//Function 1: Balancing a Red Black Tree After Deletion
+//This function deals with 4 distinct cases:
+//1. The right minimum's replacement node "x" has a red sibling
+//2. both x's sibling and x's sibling's children are black.
+//3. x's sibling is black and has a red left child and black right child
+//4. x's sibling is black and has a black left child and a red right child
+//pass to the function the node "x" that replaced the minimum right node in the RBTree. should only be run if the minimum value in the node's right branch is black
+
+1. while x is not the root and x is black:
+2.	check if x is a left child
+3.		if it is, retrieve the sibling (right child) of x and prepare to handle the 4 cases of rebalancing 
+4.		if x's sibling is red, then that means we are in case 1. I can fix this issue if I:
+5.			change the color of the sibling to black
+6.			make x's parent red
+7.			rotate the tree left about x's parent
+8.			retrieve x's new sibling (right child)
+9.		if both of the sibling's children are black, we are in case 2. I can fix this by:
+10.			set the sibling's color to red
+11.			replace x with its parent
+12.		otherwise if the sibling's left child is red and its right child is black, then we are in case 3. I can resolve this by:
+13.			make the sibling's left child black
+14.			make the sibling red
+15.			rotate the tree right about the sibling
+16.			retrieve x's new sibling (right child)
+17.		else we are now in the final case
+18.			make the sibling have the same color as x's parent
+19.			make x's parent black
+20.			make the sibling's right child black
+21.			rotate the tree left about x's parent
+22.			make x the root
+23.	else x is a right child
+24.		//repeat the same logic as above with a slight modification: swap left with right
+25.		retrieve the sibling of x (left child) and prepare to handle the 4 cases of rebalancing
+26.		if x's sibling is red, then that means we are in case 1. I'll fix this by:
+27.			change the color of the sibling to black
+28.			make x's parent red
+29.			rotate the tree right about x's parent
+30.			retrieve x's new sibling (left child)
+31.		if both of the sibling's children are black, we are in case 2.
+32.			set the sibling's color to red
+33.			replace x with its parent
+34.		otherwise if the sibling's right child is red and its left child is black, we are in case 3.
+35.			make the sibling's right child black
+36.			make the sibling red
+37.			rotate the tree left about the sibilng
+38.			retrieve x's new sibling (left child)
+39.		else we are now in the final case:
+40.			make the sibling have the same color as x's parent
+41.			make x's parent black
+42.			make the sibling's left child black
+43.			rotate the tree right about x's parent
+44.			make x the root
+45. make x black
+
+								
+//Function 2: Balancing a RBTree after insertion	 
+//Deals with 3 distinct cases:
+//1. the uncle is red
+//2. the new node is a right child
+//3. the new node is a left child and its uncle is black
+//assumes new node "x" has already been inserted and is now passed to the function
+
+1. while x is not the root and its parent is red:
+2.	check if its parent is a left child:
+3.		if so, define uncle as the right child opposite of parent
+4.		check if the uncle is red
+5.			if so, make x's parent black
+6.			make the uncle black
+7.			and make the grandparent red
+8.			make x its grandparent
+9.		else
+10.			check if x is a right child
+11.				make x equal to its parent
+12.				rotate the tree left about x
+13.		make x's parent black
+14.		make x's grandparent red
+15.		rotate the tree right about x's grandparent
+16.	if x's parent is a right child:
+17.		//do the exact same thing but swap right and left
+18.		define uncle as the left child opposite of parent
+19.		check if the uncle is red	
+20.			if so, make x's parent black
+21.			make the uncle black
+22.			and make the grandparent red
+23.			make x its grandparent
+24.		else
+25.			check if x is a left child
+26.				make x equal to its parent
+27.				rotate the tree right about x
+28.		make x's parent black
+29.		make x's grandparent red
+30.		rotate the tree left about x's grandparent
+31. make the root black
+
+Please note: this algorithm was taken from the textbook for this class. I did not invent it or influence its design in any way.
